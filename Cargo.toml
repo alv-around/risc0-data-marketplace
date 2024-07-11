@@ -1,0 +1,17 @@
+[package]
+name = "data-marketplace"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+composition-example-methods = { path = "methods" }
+risc0-ecdsa = { path = "risc0-ecdsa" }
+risc0-zkvm = { version = "0.21.0" }
+
+serde = "1.0"
+
+[features]
+cuda = ["risc0-zkvm/cuda"]
+default = []
+metal = ["risc0-zkvm/metal"]
+prove = ["risc0-zkvm/prove"]
