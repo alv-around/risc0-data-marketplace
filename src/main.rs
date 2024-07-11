@@ -12,14 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use composition_example_methods::{EXPONENTIATE_ELF, EXPONENTIATE_ID};
-use hello_world::multiply;
+use composition_example_methods::{COMPOSE_ELF, COMPOSE_ID};
+use risc0_ecdsa::prove_ecdsa_verification;
 use risc0_zkvm::{default_prover, ExecutorEnv};
+
+use rand_core::OsRng;
 
 fn main() {
     // Some party "Alice" picks two numbers and multiplies them, producing a receipt that attests
     // the fact that Alice knows the factorization of the product. This is similar to RSA keygen.
-    let (multiply_receipt, n) = multiply(17, 23);
+    let signing_key = SigningKey::random(&mut OsRng); // Serialize with `::to_bytes()`
+    let message = b"This is a message that will be signed, and verified within the zkVM";
+    let signature: Signature = signing_key.sign(message);
+
+    // Run signature verified in the zkVM guest and get the resulting receipt.
+    let signature_receipt = prove_ecdsa_verification(signing_key.verifying_key(), message, &signature);
 
     // Alice might then send to "Bob" the product and the receipt that proves Alice knows the
     // factorization. Bob then raises a secret number to a public exponent mod the composite number
@@ -27,22 +34,23 @@ fn main() {
     let env = ExecutorEnv::builder()
         // add_assumption makes the receipt to be verified available to the prover.
         .add_assumption(multiply_receipt)
-        .write(&(n, 9u64, 100u64))
+        // add inputs of outer proof
+        .write(&(message, signature)) 
         .unwrap()
         .build()
         .unwrap();
 
-    let receipt = default_prover().prove(env, EXPONENTIATE_ELF).unwrap();
+    let receipt = default_prover().prove(env, COMPOSE_ELF).unwrap();
 
     // Anybody who receives the receipt for the exponentiation is assured both that:
     // A) The modulus n included in the journal has a known factorization.
     // B) The number c is the result of exponentiation of some known secret x ^ e mod n.
     //
     // These two statements are proven with a single receipt via composition.
-    receipt.verify(EXPONENTIATE_ID).unwrap();
+    receipt.verify(COMPOSE_ID).unwrap();
 
     // Decode the receipt to get (n, e, and c = x^e mod n).
-    let (n, e, c): (u64, u64, u64) = receipt.journal.decode().unwrap();
+    // let (n, e, c): (u64, u64, u64) = receipt.journal.decode().unwrap();
 
-    println!("{c} is the result of exponentiation by {e} under composite {n} with known factors");
+    // println!("{c} is the result of exponentiation by {e} under composite {n} with known factors");
 }

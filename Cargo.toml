@@ -7,8 +7,8 @@ edition = "2021"
 composition-example-methods = { path = "methods" }
 risc0-ecdsa = { path = "risc0-ecdsa" }
 risc0-zkvm = { version = "0.21.0" }
-
 serde = "1.0"
+rand_core = "0.6.4"
 
 [features]
 cuda = ["risc0-zkvm/cuda"]

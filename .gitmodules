@@ -1,3 +1,0 @@
-[submodule "risc0-ecdsa"]
-	path = risc0-ecdsa
-	url = https://github.com/alvaro-alonso/risc0-ecdsa
