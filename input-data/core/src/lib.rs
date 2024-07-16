@@ -1,6 +1,7 @@
 
 use k256::{EncodedPoint, ecdsa::Signature};
 use serde::{Deserialize, Serialize};
+use risc0_zkvm::Receipt;
 
 #[derive(Debug, Deserialize, Serialize)]
 pub struct HeartDiseaseRecord {
@@ -27,4 +28,10 @@ pub struct HeartDiseaseMeasure {
     #[serde(deserialize_with = "csv::invalid_option")]
     pop: Option<f64>,
     target: u8,
+}
+
+#[derive(Clone, Debug, Deserialize, Serialize)]
+pub struct DataParsingComputation {
+    pub receipt: Receipt,
+    pub measures: Vec<HeartDiseaseMeasure>
 }
