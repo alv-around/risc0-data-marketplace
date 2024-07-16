@@ -11,7 +11,7 @@ risc0-zkvm = { version = "1.0.1", default-features = false, features = ["std"] }
 k256 = { version = "0.13.3", features = ["arithmetic", "serde", "expose-field", "std", "ecdsa"], default_features = false }
 csv = "1.1"
 serde = "1.0"
-input-data-utils = { path = "../../utils" }
+input-data-core = { path = "../../core" }
 hex = "0.4"
 
 [patch.crates-io]

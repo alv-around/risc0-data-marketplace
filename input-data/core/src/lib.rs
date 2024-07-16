@@ -9,7 +9,7 @@ pub struct HeartDiseaseRecord {
     pub message: String,
 }
 
-#[derive(Debug, Deserialize, Serialize)]
+#[derive(Clone, Debug, Deserialize, PartialEq, Serialize)]
 pub struct HeartDiseaseMeasure {
     age: f64,
     sex: f64,

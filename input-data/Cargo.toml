@@ -5,7 +5,7 @@ edition = "2021"
 
 [dependencies]
 input-data-methods = { path = "methods" }
-input-data-utils = { path = "utils" }
+input-data-core = { path = "core" }
 
 anyhow = "1.0"
 bincode = "1.3"

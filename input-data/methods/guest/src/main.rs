@@ -6,7 +6,7 @@ use csv::{ReaderBuilder, StringRecord};
 
 use hex;
 
-use input_data_utils::HeartDiseaseMeasure;
+use input_data_core::HeartDiseaseMeasure;
 
 // use risc0_zkvm::examples::merkle::{MerkleTree, Node};
 use risc0_zkvm::guest::env;
@@ -64,6 +64,6 @@ fn main() {
         }
     }
 
-    env::commit(&measures);
+    env::write(&measures);
 
 }
