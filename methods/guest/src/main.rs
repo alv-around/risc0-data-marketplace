@@ -12,19 +12,21 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-use k256::ecdsa::Signature;
-
-use risc0_ecdsa_methods::SIGNATURE_ID;
+use input_data_methods::HEART_DISEASE_DATA_ID;
 use risc0_zkvm::{guest::env, serde};
 
 fn main() {
-    // change guest code to accept the outerproof inputs
-    let (message, sig): (Vec<u8>, Signature) = env::read();
+    // adjust for proof inputs
+    let data: String = env::read();
 
-    // Verify that n has a known factorization.
-    env::verify(SIGNATURE_ID, &serde::to_vec(&(message, sig)).unwrap()).unwrap();
+    // Verify parsing the csv file has been done correctly
+    env::verify(HEART_DISEASE_DATA_ID, &serde::to_vec(&data).unwrap()).unwrap();
 
-    // Commit n, e, and x^e mod n.
-    //env::commit(&(n, e, pow_mod(x, e, n)));
+    // TODO: add matrix computation and data muching here
+
+    // Commit values
+    // env::commit(&(n, e));
 }
+
+
 

@@ -6,10 +6,8 @@ edition = "2021"
 [workspace]
 
 [dependencies]
-risc0-zkvm = { version = "0.21.0", default-features = false, features = ["std"] }
-risc0-ecdsa-methods = { path = "../../risc0-ecdsa/methods" }
-k256 = { version = "=0.13.1", features = ["arithmetic", "serde", "expose-field", "std", "ecdsa"], default_features = false }
-bytemuck = "1.14"
+risc0-zkvm = { version = "1.0.1", default-features = false, features = ["std"] }
+input-data-methods= { path = "../../input-data/methods" }
 
 [patch.crates-io]
 # Placing these patch statement in the workspace Cargo.toml will add RISC Zero SHA-256 and bigint
