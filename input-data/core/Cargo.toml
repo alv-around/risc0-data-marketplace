@@ -1,0 +1,10 @@
+[package]
+name = "input-data-core"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+risc0-zkvm = { version = "1.0.1" }
+k256 = { version = "0.13.3", features = ["serde", "std", "ecdsa"], default_features = false }
+serde = "1.0"
+csv = "1.1"

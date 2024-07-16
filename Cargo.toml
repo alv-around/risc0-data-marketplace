@@ -1,0 +1,17 @@
+[package]
+name = "data-marketplace"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+composition-example-methods = { path = "methods" }
+input-data = { path = "input-data" }
+risc0-zkvm = { version = "1.0.1" }
+serde = "1.0"
+rand_core = "0.6.4"
+
+[features]
+cuda = ["risc0-zkvm/cuda"]
+default = []
+metal = ["risc0-zkvm/metal"]
+prove = ["risc0-zkvm/prove"]
